@@ -4,30 +4,30 @@ import platform
 
 from ghost import load_images
 from chatgpt import openChatGPTInput
-import events
+import animation
 import click
 
 ANIMATION_DELAY = 150
 WINDOW_SIZE = 100
 OFFSET = 300
 
-window = tk.Tk()
-
-default, walk_right, walk_left, angry = load_images()
-
-# position of virtual pet
-screen_width = window.winfo_screenwidth()
-pet_width = 48
-pos = (screen_width - pet_width) // 2
-
-current_frame = 0
-current_state = 0
-
 DEFAULT_ANIMATION = 1
 WALK_RIGHT_ANIMATION = 2
 WALK_LEFT_ANIMATION = 3
+
+PET_WIDTH = 48
+
+current_frame = 0
 # Chooses a random animation to start with
 current_state = random.randrange(1, 4, 1)
+
+window = tk.Tk()
+default, walk_right, walk_left, angry = load_images()
+
+# position of virtual pet
+def virtual_pet_position(pet_width):
+    return (window.winfo_screenwidth() - pet_width) // 2
+pos = virtual_pet_position(PET_WIDTH)
 
 def update(current_frame, current_state, pos, pet_widget):
     frame = None
@@ -95,14 +95,21 @@ window.bind('<Button-3>', lambda event: click.on_click_event(event, window, pet_
 if platform.system() == "Darwin":
     window.config(bg="systemTransparent")
     window.wm_attributes("-transparent", True)
+    window.overrideredirect(True)
+    window.geometry(f"{WINDOW_SIZE}x{WINDOW_SIZE}+" + str(pos) + f"+{OFFSET}")
+    window.wm_attributes("-topmost", True)
 elif platform.system() == "Windows":
     window.config(bg="white")
     window.attributes('-alpha', 1)
+    window.overrideredirect(True)
+    window.geometry(f"{WINDOW_SIZE}x{WINDOW_SIZE}+" + str(pos) + f"+{OFFSET}")
+    window.wm_attributes("-topmost", True)
 
-window.overrideredirect(True)
-window.geometry(f"{WINDOW_SIZE}x{WINDOW_SIZE}+" + str(pos) + f"+{OFFSET}")
-window.wm_attributes("-topmost", True)
+def start_animation(canvas, pet_widget, frame):
+    canvas.itemconfig(pet_widget, image=frame)
+    
 
-window.after(0, events.start_animation, canvas, pet_widget, angry[0])
-window.after(150, update, current_frame, current_state, pos, pet_widget)
+window.after(0, animation.start_animation, canvas, pet_widget, angry[0])
+window.after(ANIMATION_DELAY, update, current_frame, current_state, pos, pet_widget)
+
 window.mainloop()
