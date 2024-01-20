@@ -27,7 +27,7 @@ def load_images():
         for i in range(12)
     ]
 
-    return default, walk_right, walk_left
+    return default, walk_right, walk_left, angry
 
 # gif movement
 def move(cycle, frame, event_num, first, last, pet_widget):
@@ -35,6 +35,5 @@ def move(cycle, frame, event_num, first, last, pet_widget):
         cycle += 1
     else:
         cycle = 0
-        # FIX THIS FOR THE FREEZING ISSUE
         event_num = random.randrange(first, last + 1, 1)
     return cycle, event_num

@@ -63,11 +63,9 @@ def update(cycle, current_state, event_num, pos, pet_widget):
     canvas.itemconfig(pet_widget, image=frame)
     window.after(ANIMATION_DELAY, event, cycle, current_state, event_num, pos, pet_widget)
 
-def angry(pos, pet_widget):
-    print("Angry")
-    canvas.itemconfig(pet_widget, image=default[1])
+def angry_change(pos, pet_widget):
+    canvas.itemconfig(pet_widget, image=angry[0])
     window.after(ANIMATION_DELAY, event, 0, 0, 0, pos, pet_widget)
-
 
 canvas = tk.Canvas(window, width=100, height=100)
 canvas.bind('<Button-1>', lambda event: openChatGPTInput(event, window))
@@ -79,7 +77,7 @@ pet_widget = canvas.create_image(
 )
 
 # Right clicking on the button
-window.bind('<Button-3>', lambda event: click.on_click_event(event, window, pet_widget, angry))
+window.bind('<Button-3>', lambda event: click.on_click_event(event, window, pet_widget, angry_change))
 
 
 # label = tk.Label(window, bd=0)

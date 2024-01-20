@@ -1,6 +1,6 @@
 
 
-CLICK_LIMIT = 10
+CLICK_LIMIT = 5
 
 click_counter = 0
 
@@ -19,3 +19,4 @@ def on_click_event(event, window, pet_widget, function):
         print("ANGRY")
         window.after(0, function, pos, pet_widget)
     click_counter += 1
+
