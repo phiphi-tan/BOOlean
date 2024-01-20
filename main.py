@@ -1,7 +1,11 @@
 import random
 import tkinter as tk
+from pathlib import Path
+import platform
 
-IDLE_PATH = "assets/idle.gif"
+# Using pathlib.Path to have general paths regardless of OS
+RAW_IDLE_PATH = Path("assets/idle.gif")
+IDLE_PATH = RAW_IDLE_PATH.resolve()
 ANIMATION_DELAY = 150
 
 window = tk.Tk()
@@ -56,9 +60,16 @@ def update(cycle, current_state, event_num, pos):
 label = tk.Label(window, bd=0)
 label.pack()
 
-window.config(bg="systemTransparent")
+# For different OS systems
+if platform.system() == "Darwin":
+    window.config(bg="systemTransparent")
+    window.wm_attributes("-transparent", True)
+elif platform.system() == "Windows":
+    window.config(bg="white")
+    window.attributes('-alpha', 1)
+
 window.overrideredirect(True)
 window.wm_attributes("-topmost", True)
-window.wm_attributes("-transparent", True)
+
 window.after(0, update, cycle, current_state, event_num, pos)
 window.mainloop()
