@@ -4,7 +4,6 @@ import platform
 
 from ghost import load_images
 from chatgpt import openChatGPTInput
-import animation
 import click
 
 ANIMATION_DELAY = 150
@@ -109,7 +108,7 @@ def start_animation(canvas, pet_widget, frame):
     canvas.itemconfig(pet_widget, image=frame)
     
 
-window.after(0, animation.start_animation, canvas, pet_widget, angry[0])
+window.after(0, start_animation, canvas, pet_widget, angry[0])
 window.after(ANIMATION_DELAY, update, current_frame, current_state, pos, pet_widget)
 
 window.mainloop()
