@@ -67,7 +67,7 @@ def next_frame(current_frame, full_animation, current_state):
 
 def angry_change(pos, pet_widget):
     canvas.itemconfig(pet_widget, image=angry[0])
-    window.after(ANIMATION_DELAY, update, 0, 0, 0, pos, pet_widget)
+    window.after(ANIMATION_DELAY, update, 0, 0, pos, pet_widget)
 
 canvas = tk.Canvas(window, width=100, height=100)
 canvas.bind(
