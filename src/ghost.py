@@ -1,4 +1,5 @@
 import tkinter as tk
+import random
 
 IDLE_PATH = "assets/idle.gif"
 RIGHT_PATH = "assets/ghost_right_move.gif"
@@ -21,3 +22,13 @@ def load_images():
     ]
 
     return default, walk_right, walk_left
+
+# gif movement
+def move(cycle, frame, event_num, first, last, pet_widget):
+    if cycle < len(frame) - 1:
+        cycle += 1
+    else:
+        cycle = 0
+        # FIX THIS FOR THE FREEZING ISSUE
+        event_num = random.randrange(first, last + 1, 1)
+    return cycle, event_num
