@@ -4,6 +4,7 @@ import platform
 
 from ghost import load_images, move
 from chatgpt import openChatGPTInput
+import click
 
 ANIMATION_DELAY = 150
 WINDOW_SIZE = 100
@@ -11,7 +12,7 @@ OFFSET = 300
 
 window = tk.Tk()
 
-default, walk_right, walk_left = load_images()
+default, walk_right, walk_left, angry = load_images()
 
 # position of virtual pet
 screen_width = window.winfo_screenwidth()
@@ -30,6 +31,7 @@ def event(cycle, current_state, event_num, pos, pet_widget):
     if event_num in default_num:
         current_state = 0
         window.after(0, update, cycle, current_state, event_num, pos, pet_widget)
+        window.positionfrom
 
     elif event_num in right_num:
         current_state = 1
@@ -61,6 +63,10 @@ def update(cycle, current_state, event_num, pos, pet_widget):
     canvas.itemconfig(pet_widget, image=frame)
     window.after(ANIMATION_DELAY, event, cycle, current_state, event_num, pos, pet_widget)
 
+def angry(pos, pet_widget):
+    print("Angry")
+    canvas.itemconfig(pet_widget, image=default[1])
+    window.after(ANIMATION_DELAY, event, 0, 0, 0, pos, pet_widget)
 
 
 canvas = tk.Canvas(window, width=100, height=100)
@@ -71,6 +77,9 @@ canvas.focus_set()
 pet_widget = canvas.create_image(
     WINDOW_SIZE / 2, WINDOW_SIZE / 2, image=default[0]
 )
+
+# Right clicking on the button
+window.bind('<Button-3>', lambda event: click.on_click_event(event, window, pet_widget, angry))
 
 
 # label = tk.Label(window, bd=0)
