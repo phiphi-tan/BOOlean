@@ -2,7 +2,7 @@ import random
 import tkinter as tk
 import platform
 
-from ghost import load_images 
+from ghost import load_images, move
 from chatgpt import openChatGPTInput
 
 ANIMATION_DELAY = 150
@@ -32,23 +32,12 @@ def event(cycle, current_state, event_num, pos, pet_widget):
         window.after(0, update, cycle, current_state, event_num, pos, pet_widget)
 
     elif event_num in right_num:
-        current_state = 2
+        current_state = 1
         window.after(0, update, cycle, current_state, event_num, pos, pet_widget)
 
     elif event_num in left_num:
-        current_state = 3
+        current_state = 2
         window.after(0, update, cycle, current_state, event_num, pos, pet_widget)
-
-
-# gif movement
-def move(cycle, frame, event_num, first, last, pet_widget):
-    if cycle < len(frame) - 1:
-        cycle += 1
-    else:
-        cycle = 0
-        # FIX THIS FOR THE FREEZING ISSUE
-        event_num = random.randrange(first, last + 1, 1)
-    return cycle, event_num
 
 
 def update(cycle, current_state, event_num, pos, pet_widget):
