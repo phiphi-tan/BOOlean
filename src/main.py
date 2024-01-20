@@ -3,12 +3,11 @@ import tkinter as tk
 import platform
 
 from ghost import load_images
-from chatgpt import openChatGPTInput
+from chatgpt import openChatGPTWindow
 import click
 
 ANIMATION_DELAY = 150
 WINDOW_SIZE = 100
-OFFSET = 300
 
 DEFAULT_ANIMATION = 1
 WALK_RIGHT_ANIMATION = 2
@@ -27,6 +26,8 @@ default, walk_right, walk_left, angry = load_images()
 def virtual_pet_position(pet_width):
     return (window.winfo_screenwidth() - pet_width) // 2
 pos = virtual_pet_position(PET_WIDTH)
+
+yPos = 300
 
 def update(current_frame, current_state, pos, pet_widget):
     frame = None
@@ -69,7 +70,8 @@ def angry_change(pos, pet_widget):
     window.after(ANIMATION_DELAY, update, 0, 0, 0, pos, pet_widget)
 
 canvas = tk.Canvas(window, width=100, height=100)
-canvas.bind('<Button-1>', lambda event: openChatGPTInput(event, window))
+canvas.bind(
+    '<Button-1>', lambda event: openChatGPTWindow(event, window, pos, yPos))
 canvas.pack()
 canvas.focus_set()
 
@@ -95,13 +97,13 @@ if platform.system() == "Darwin":
     window.config(bg="systemTransparent")
     window.wm_attributes("-transparent", True)
     window.overrideredirect(True)
-    window.geometry(f"{WINDOW_SIZE}x{WINDOW_SIZE}+" + str(pos) + f"+{OFFSET}")
+    window.geometry(f"{WINDOW_SIZE}x{WINDOW_SIZE}+" + str(pos) + f"+{yPos}")
     window.wm_attributes("-topmost", True)
 elif platform.system() == "Windows":
     window.config(bg="white")
     window.attributes('-alpha', 1)
     window.overrideredirect(True)
-    window.geometry(f"{WINDOW_SIZE}x{WINDOW_SIZE}+" + str(pos) + f"+{OFFSET}")
+    window.geometry(f"{WINDOW_SIZE}x{WINDOW_SIZE}+" + str(pos) + f"+{yPos}")
     window.wm_attributes("-topmost", True)
 
 def start_animation(canvas, pet_widget, frame):

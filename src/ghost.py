@@ -6,6 +6,7 @@ RIGHT_PATH = "assets/ghost_right_move.gif"
 LEFT_PATH = "assets/ghost_left_move.gif"
 ANGRY_PATH = "assets/ghost_angry.gif"
 
+
 def load_images():
     default = [
         tk.PhotoImage(file=IDLE_PATH, format="gif -index %i" % (i)).zoom(2, 2)
